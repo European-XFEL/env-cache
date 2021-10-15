@@ -51,7 +51,7 @@ class FixedPythonEnvMaker(EnvMaker):
 
 
 class CondaEnvMaker(EnvMaker):
-    def __init__(self, conda_exe):
+    def __init__(self, conda_exe='conda'):
         self.conda_exe = conda_exe
 
     def describe(self, py_version):
@@ -64,7 +64,7 @@ class CondaEnvMaker(EnvMaker):
 
 
 class SpackEnvMaker(EnvMaker):
-    def __init__(self, spack_exe):
+    def __init__(self, spack_exe='spack'):
         self.spack_exe = spack_exe
 
     def describe(self, py_version) -> str:
