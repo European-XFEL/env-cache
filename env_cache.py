@@ -63,6 +63,28 @@ class CondaEnvMaker(EnvMaker):
         ], check=True)
 
 
+class SpackEnvMaker(EnvMaker):
+    def __init__(self, spack_exe):
+        self.spack_exe = spack_exe
+
+    def describe(self, py_version) -> str:
+        return f"{py_version} from spack"
+
+    def make_env(self, env_dir, py_version):
+        run([
+            self.spack_exe, 'install', f'python@{py_version}'
+        ], check=True)
+        find_results = run([
+            self.spack_exe, 'find', '-p', f'python@{py_version}'
+        ], check=True, stdout=PIPE).stdout.decode('utf-8')
+        py_prefix = [
+            l for l in find_results.splitlines()
+            if l.startswith('python@')
+        ][0].split()[-1]
+        python_exe = Path(py_prefix, 'bin', 'python')
+        run([python_exe, '-m', 'venv', '--clear', env_dir], check=True)
+
+
 class EnvsManager:
     def __init__(self, path: Path, env_maker: EnvMaker):
         self.path = path
