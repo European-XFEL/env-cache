@@ -13,4 +13,4 @@ classifiers = [
 ]
 
 [project.urls]
-Home = "https://git.xfel.eu/dataAnalysis/env-cache"
+Source = "https://github.com/European-XFEL/env-cache"
