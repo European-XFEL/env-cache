@@ -1,3 +1,4 @@
+"""Get a Python environment for a Python version and requirements.txt file"""
 import abc
 import csv
 import getpass
@@ -10,6 +11,9 @@ from pathlib import Path
 from shutil import rmtree, which
 from subprocess import run, PIPE
 from tempfile import mkdtemp
+
+__version__ = "0.1"
+
 
 class EnvMaker(abc.ABC):
     @abc.abstractmethod
