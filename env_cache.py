@@ -50,6 +50,24 @@ class FixedPythonEnvMaker(EnvMaker):
         run([self.python_exe, '-m', 'venv', '--clear', in_dir], check=True)
 
 
+class PyenvEnvMaker(EnvMaker):
+    def __init__(self, pyenv_exe='pyenv'):
+        self.pyenv_exe = pyenv_exe
+
+    def describe(self, py_version) -> str:
+        return f"{py_version} from pyenv"
+
+    def make_env(self, env_dir, py_version):
+        run([
+            self.pyenv_exe, 'install', '--skip-existing', py_version
+        ], check=True)
+        py_prefix = run([
+            self.pyenv_exe, 'prefix', py_version
+        ], check=True, stdout=PIPE).stdout.decode('utf-8').strip()
+        python_exe = Path(py_prefix, 'bin', 'python')
+        run([python_exe, '-m', 'venv', '--clear', env_dir], check=True)
+
+
 class CondaEnvMaker(EnvMaker):
     def __init__(self, conda_exe='conda'):
         self.conda_exe = conda_exe
