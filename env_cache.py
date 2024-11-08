@@ -108,9 +108,10 @@ class SpackEnvMaker(EnvMaker):
 
 
 class EnvsManager:
-    def __init__(self, path: Path, env_maker: EnvMaker):
+    def __init__(self, path: Path, env_maker: EnvMaker, index_url=None):
         self.path = path
         self.env_maker = env_maker
+        self.index_url = index_url
 
         (path / '.envs').mkdir(parents=True, exist_ok=True)
 
@@ -148,7 +149,10 @@ class EnvsManager:
             reqs_txt.write_text(reqs, 'utf-8')
             print("Installing packages with pip....")
             env_python = real_env_dir / 'bin' / 'python'
-            run([env_python, '-m', 'pip', 'install', '-r', reqs_txt], check=True)
+            pip_cmd = [env_python, '-m', 'pip', 'install', '-r', reqs_txt]
+            if self.index_url is not None:
+                pip_cmd += ['--index-url', self.index_url]
+            run(pip_cmd, check=True)
             new_link = real_env_dir.with_suffix('.link')
             new_link.symlink_to(real_env_dir)
             new_link.replace(env_dir)
