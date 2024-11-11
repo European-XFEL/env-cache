@@ -34,7 +34,7 @@ class FixedPythonEnvMaker(EnvMaker):
 
     def _get_version(self):
         res = run([self.python_exe, '--version'], check=True, stdout=PIPE)
-        m = re.match("Python\s+(\S+)$", res.stdout.decode('utf-8'))
+        m = re.match(r"Python\s+(\S+)$", res.stdout.decode('utf-8'))
         if not m:
             raise ValueError(
                 f"python --version output ({res.stdout}) not as expected"
