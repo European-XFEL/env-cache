@@ -37,7 +37,7 @@ jobs:
       # Doing this beforehand should make the test itself faster
       - name: Preinstall Python 3.11.10
         run: |
-          pyenv install 3.11.10
+          pyenv install -v 3.11.10
 
       - name: Checkout
         uses: actions/checkout@v4
