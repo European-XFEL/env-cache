@@ -16,7 +16,7 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
           libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-          libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev ffmpeg
+          libncursesw5-dev xz-utils libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev ffmpeg
       - name: Install pyenv
         run: |
           git clone https://github.com/pyenv/pyenv.git "$HOME/.pyenv"
@@ -32,7 +32,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.pyenv/versions
-          key: ${{ runner.os }}-pyenv-3.11.10
+          key: ${{ runner.os }}-pyenv-3.11.10-b
 
       # Doing this beforehand should make the test itself faster
       - name: Preinstall Python 3.11.10
